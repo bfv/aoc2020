@@ -1,0 +1,23 @@
+{
+  "name": "aoc2020",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "aoc",
+    "advent",
+    "of",
+    "code"
+  ],
+  "author": "bfv <dev@bfv.io>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^14.14.10"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.2"
+  }
+}
