@@ -19,20 +19,12 @@ export class PasswordData {
     }
 
     checkA(): boolean {
-        let count = 0;
-        for(let i = 0; i < this.password.length; i++) {
-            if (this.password.substr(i, 1) == this.character) {
-                count++;
-            }
-        }
+        let count = this.password.split(this.character).length - 1;
         return (this.min <= count && count <= this.max);
     }
 
     checkB(): boolean {
-        // no XOR...
-        let count = (this.password.substr(this.min - 1, 1) == this.character) ? 1 : 0;
-        count += (this.password.substr(this.max - 1, 1) == this.character) ? 1 : 0;
-        return (count == 1);
+        return (this.password.substr(this.min - 1, 1) == this.character) != (this.password.substr(this.max - 1, 1) == this.character);
     }
 
     toString() {
