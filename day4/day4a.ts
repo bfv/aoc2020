@@ -4,8 +4,9 @@ function main(inputFile: string): number {
     const file = fs.readFileSync(inputFile, "utf-8");
     let passports = file.split('\n\n');
     let validPassports = 0;
+
     passports.forEach(passport => {
-        let reqFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid', 'cid'];
+        let reqFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
 
         while (passport != passport.replace('\n', ' ')) {
             passport = passport.replace('\n', ' ');
@@ -17,7 +18,7 @@ function main(inputFile: string): number {
             reqFields = reqFields.filter(item => item != fieldname);
         });
         
-        if (reqFields.length == 0 || (reqFields.length == 1 && reqFields[0] == 'cid')) {
+        if (reqFields.length == 0) {
             validPassports++;
         }
     });
@@ -29,5 +30,6 @@ const t1 = new Date().getTime();
 const result = main('./input.txt');
 const t2 = new Date().getTime();
 
-console.log('day4a:', result);
+console.log('day4a:', result);    // 219
 console.log('time:', (t2 - t1), 'ms');
+
