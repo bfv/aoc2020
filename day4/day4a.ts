@@ -16,7 +16,7 @@ function main(inputFile: string): number {
             const fieldname = field.split(':')[0];
             reqFields = reqFields.filter(item => item != fieldname);
         });
-        console.log('missing', reqFields);
+        
         if (reqFields.length == 0 || (reqFields.length == 1 && reqFields[0] == 'cid')) {
             validPassports++;
         }
