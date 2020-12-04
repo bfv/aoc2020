@@ -6,35 +6,34 @@ function main(inputFile: string): number {
     let validPassports = 0;
     passports.forEach(passport => {
 
-        let reqFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid', 'cid'];
+        let reqFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
 
-        while (passport != passport.replace('\n', ' ')) {
-            passport = passport.replace('\n', ' ');
-        }
-
-        const fields = passport.split(' ');
+        const fields = passport.replace(/\n/g, ' ').split(' ');
         fields.forEach(field => {
             const fieldname = field.split(':')[0];
             reqFields = reqFields.filter(item => item != fieldname);
         });
         
-        if (reqFields.length == 0 || (reqFields.length == 1 && reqFields[0] == 'cid')) {
+        if (reqFields.length == 0) {
             let valid = true;
-            fields.forEach(field => {
-                const fieldname = field.split(':')[0];
-                const fieldvalue = field.split(':')[1];
-                const fieldvalueInt = parseInt(fieldvalue) || 0;
+            for (let field of fields) {
+        
+                let [k, v] = field.split(':');    // destruct key, value
+                const vInt = parseInt(v);
 
-                switch (fieldname) {
-                    case 'byr': valid &&= (1920 <= fieldvalueInt && fieldvalueInt <= 2002); break;
-                    case 'iyr': valid &&= (2010 <= fieldvalueInt && fieldvalueInt <= 2020); break;
-                    case 'eyr': valid &&= (2020 <= fieldvalueInt && fieldvalueInt <= 2030); break;
-                    case 'hgt': valid &&= checkHeight(fieldvalue); break;
-                    case 'hcl': valid &&= checkHairColor(fieldvalue); break;
-                    case 'ecl': valid &&= checkEyeColor(fieldvalue); break; 
-                    case 'pid': valid &&= (fieldvalue.length == 9 && fieldvalueInt != NaN); break;
+                switch (k) {
+                    case 'byr': valid &&= (1920 <= vInt && vInt <= 2002); break;
+                    case 'iyr': valid &&= (2010 <= vInt && vInt <= 2020); break;
+                    case 'eyr': valid &&= (2020 <= vInt && vInt <= 2030); break;
+                    case 'hgt': valid &&= checkHeight(v); break;
+                    case 'hcl': valid &&= checkHairColor(v); break;
+                    case 'ecl': valid &&= checkEyeColor(v); break; 
+                    case 'pid': valid &&= (v.length == 9 && vInt != NaN); break;
                 }
-            });
+                if (!valid) {
+                    break;
+                }
+            };
 
             if (valid) {
                 validPassports++;
