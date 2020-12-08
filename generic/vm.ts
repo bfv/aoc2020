@@ -18,7 +18,7 @@ export class VM {
         this.register = new Register();
     }
 
-    executeProgram(instructions: Instruction[]) {
+    executeProgram(instructions: Instruction[]): boolean {
         
         this.reset();
 
@@ -28,9 +28,10 @@ export class VM {
         while(!hasLoop && instructions[this.register.offset]) {
 
             visited.push(this.register.offset);
-            let instruction = instructions[this.register.offset];
 
+            let instruction = instructions[this.register.offset];
             this.execute(instruction);
+            
             hasLoop = visited.includes(this.register.offset);
         }
 
@@ -43,7 +44,7 @@ export class VM {
             case 'acc': this.executeACC(instruction.argument); break;
             case 'jmp': this.executeJMP(instruction.argument); break;
             case 'nop': this.executeNOP(); break;
-            default: throw new Error()
+            default: throw new Error(`operator '${instruction.operator}' not supported`);
         }
 
     }
