@@ -19,30 +19,25 @@ function main(inputFile: string): number {
         ));
     });
 
-    let acc = -1;
-    for (let i = 0; i < instructions.length && acc < 0; i++) {
+    let accumulator = -1;
+    for (let i = 0; i < instructions.length && accumulator < 0; i++) {
 
         let original = instructions[i].operator;
-        let altered = false;
+        let altered = true;
 
-        if (original == 'jmp') {
-            instructions[i].operator = 'nop'; 
-            altered = true;
-        } 
-        
-        if (original == 'nop') {
-            instructions[i].operator = 'jmp'; 
-            altered = true;
+        switch(original) {
+            case 'jmp': instructions[i].operator = 'nop'; break;
+            case 'nop': instructions[i].operator = 'jmp'; break;
+            default: altered = false;
         }
         
         if (altered) {            
-            acc = checkLoop(instructions);
+            accumulator = checkLoop(instructions);
             instructions[i].operator = original;           
-        }
-        
+        }   
     }
 
-    return acc;
+    return accumulator;
 }
 
 function checkLoop(instructions: Instruction[]): number {
@@ -55,8 +50,8 @@ function checkLoop(instructions: Instruction[]): number {
         let instruction = instructions[offset];
 
         switch(instruction.operator) {
+            case 'acc': accumulator += instruction.argument; offset++; break;
             case 'jmp': offset += instruction.argument; break;
-            case 'acc': accumulator += instruction.argument; break;
             case 'nop': offset++; break;
         }
     }
