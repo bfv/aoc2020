@@ -35,7 +35,7 @@ function checkLoop(instructions: Instruction[]): number {
 
         switch(instruction.operator) {
             case 'jmp': offset += instruction.argument; break;
-            case 'acc': accumulator += instruction.argument; break;
+            case 'acc': accumulator += instruction.argument; offset++; break;
             case 'nop': offset++; break;
         }
     }
