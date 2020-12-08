@@ -42,7 +42,7 @@ export class VM {
         switch(instruction.operator) {
             case 'acc': this.executeACC(instruction.argument); break;
             case 'jmp': this.executeJMP(instruction.argument); break;
-            case 'nop': this.executeNOP(instruction.argument); break;
+            case 'nop': this.executeNOP(); break;
             default: throw new Error()
         }
 
@@ -57,7 +57,7 @@ export class VM {
         this.register.offset += argument;
     }
 
-    private executeNOP(argument: number) {
+    private executeNOP() {
         this.register.offset++;
     }
 
