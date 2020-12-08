@@ -4,8 +4,6 @@ class Instruction {
     constructor(public operator: string, public argument: number) {}
 }
 
-const containsLoop = 0.5;  // a non-integer means a loop was encountered
-
 function main(inputFile: string): number {
 
     const file = fs.readFileSync(inputFile, "utf-8");
@@ -21,8 +19,8 @@ function main(inputFile: string): number {
         ));
     });
 
-    let accumulator = containsLoop;
-    for (let i = 0; i < instructions.length && accumulator == containsLoop; i++) {
+    let accumulator: number | null = null;
+    for (let i = 0; i < instructions.length && accumulator == null; i++) {
 
         let original = instructions[i].operator;
         let altered = true;
@@ -39,10 +37,10 @@ function main(inputFile: string): number {
         }   
     }
 
-    return accumulator;
+    return accumulator || -1;  // -1 -> no result
 }
 
-function checkLoop(instructions: Instruction[]): number {
+function checkLoop(instructions: Instruction[]): number | null {
 
     let accumulator = 0, offset = 0;
     let visited: number[] = [];
@@ -58,7 +56,7 @@ function checkLoop(instructions: Instruction[]): number {
         }
     }
     
-    return (offset == instructions.length) ? accumulator : containsLoop;
+    return (offset == instructions.length) ? accumulator : null;
 }
 
 
