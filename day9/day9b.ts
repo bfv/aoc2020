@@ -1,11 +1,6 @@
 
 import * as fs from 'fs';
 
-class Instruction {
-    constructor(public operator: string, public argument: number) {}
-}
-
-
 function main(inputFile: string, toCheck: number): number {
 
     let numbers = getInput(inputFile);
@@ -43,8 +38,5 @@ const t1 = new Date().getTime();
 
 const result = main('./input.txt', 1124361034);
 
-const t2 = new Date().getTime();
-
-console.log('day9b:', result); 
-console.log('time:', (t2 - t1), 'ms');
+console.log('day9b:', result, '- time:', (new Date().getTime() - t1), 'ms');
 
