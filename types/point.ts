@@ -15,4 +15,8 @@ export class Point {
     toString() {
         return this.x.toString() + ',' + this.y.toString();
     }
+
+    getManhattanDistance(): number {
+        return Math.abs(this.x) + Math.abs(this.y);
+    }
 }
